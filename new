@@ -1,0 +1,768 @@
+`multilingual-translator-with-learn.html`
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Multilingual Translator & Language Learning - 500+ Languages</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+  body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    margin: 0;
+    padding: 0;
+    color: #fff;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 2rem;
+    scroll-behavior: smooth;
+  }
+  header {
+    text-align: center;
+    margin-bottom: 2rem;
+    max-width: 900px;
+    padding: 0 1rem;
+  }
+  header h1 {
+    font-weight: 700;
+    font-size: 3rem;
+    margin-bottom: 0.2rem;
+    text-shadow: 0 3px 10px rgba(0,0,0,0.3);
+  }
+  header p {
+    font-weight: 400;
+    font-size: 1.3rem;
+    color: #d6d6d6;
+    text-shadow: 0 1px 5px rgba(0,0,0,0.15);
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  main {
+    background-color: rgba(255, 255, 255, 0.12);
+    border-radius: 16px;
+    padding: 2.5rem 2.5rem 3.5rem 2.5rem;
+    max-width: 900px;
+    width: 95vw;
+    box-shadow: 0 8px 50px rgba(0,0,0,0.4);
+  }
+  section {
+    margin-bottom: 3.5rem;
+  }
+  h2 {
+    font-weight: 700;
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 3px solid #ffdd57;
+    padding-bottom: 0.3rem;
+    text-shadow: 0 1px 5px rgba(0,0,0,0.3);
+  }
+  label {
+    font-weight: 600;
+    font-size: 1.125rem;
+    display: block;
+    margin-bottom: 0.8rem;
+  }
+  select {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    font-family: inherit;
+    box-shadow: inset 0 2px 6px rgba(0,0,0,0.15);
+    appearance: none;
+    background: white;
+    color: #333;
+    cursor: pointer;
+    margin-bottom: 1.7rem;
+    transition: box-shadow 0.3s ease;
+    max-height: 200px;
+    overflow-y: auto;
+  }
+  select:hover, select:focus {
+    box-shadow: inset 0 2px 10px rgba(0,0,0,0.25);
+  }
+  textarea {
+    width: 100%;
+    min-height: 120px;
+    font-family: inherit;
+    font-size: 1.125rem;
+    padding: 0.75rem 1rem;
+    border-radius: 12px;
+    border: none;
+    outline: none;
+    resize: vertical;
+    margin-bottom: 1.5rem;
+    box-shadow: inset 0 2px 10px rgba(0,0,0,0.3);
+  }
+  button {
+    background: #ffdd57;
+    color: #4a3c00;
+    font-weight: 700;
+    border: none;
+    border-radius: 12px;
+    padding: 0.8rem 2.2rem;
+    font-size: 1.25rem;
+    cursor: pointer;
+    box-shadow: 0 6px 18px rgba(255,221,87,0.7);
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+    user-select: none;
+    position: relative;
+  }
+  button:hover:not(:disabled), button:focus:not(:disabled) {
+    background: #f2c700;
+    box-shadow: 0 8px 28px rgba(242,199,0,0.9);
+    outline: none;
+  }
+  button:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+  .output {
+    margin-top: 1.7rem;
+    min-height: 110px;
+    background: rgba(255, 255, 255, 0.16);
+    border-radius: 12px;
+    padding: 1.2rem 1.4rem;
+    font-size: 1.2rem;
+    line-height: 1.45;
+    color: #fff;
+    box-shadow: inset 0 2px 15px rgba(0,0,0,0.55);
+    white-space: pre-wrap;
+    user-select: text;
+  }
+  .loading {
+    font-style: italic;
+    color: #ffea7f;
+  }
+  .footer {
+    margin-top: 2rem;
+    font-size: 0.9rem;
+    color: #bbb;
+    text-align: center;
+    max-width: 900px;
+    padding: 0 1rem 2rem 1rem;
+  }
+  a {
+    color: #ffdd57;
+    text-decoration: none;
+  }
+  a:hover, a:focus {
+    text-decoration: underline;
+  }
+  .selectors {
+    display: flex;
+    flex-direction: column;
+    gap: 1.7rem;
+  }
+  @media (min-width: 600px) {
+    .selectors {
+      flex-direction: row;
+      gap: 2rem;
+    }
+    .selectors > div {
+      flex: 1;
+    }
+  }
+  /* Learn Languages section */
+  #learn-section label {
+    margin-top: 0;
+  }
+  .lesson-card {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 14px;
+    padding: 1.8rem 2rem;
+    margin-top: 1.7rem;
+    box-shadow: 0 10px 35px rgba(0,0,0,0.35);
+  }
+  .lesson-card h3 {
+    margin-top: 0;
+    font-weight: 700;
+    font-size: 1.6rem;
+    color: #ffdd57;
+    text-shadow: 0 1px 6px rgba(0,0,0,0.45);
+    margin-bottom: 1rem;
+  }
+  .lesson-card p {
+    font-size: 1.1rem;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+    color: #fefefe;
+  }
+  .phrases {
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 0;
+  }
+  .phrases li {
+    margin-bottom: 0.65rem;
+    font-size: 1.1rem;
+  }
+  .phrases span.phrase {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 6px;
+    padding: 3px 8px;
+    cursor: help;
+    user-select: none;
+    font-weight: 600;
+    margin-right: 0.6rem;
+    display: inline-block;
+  }
+  .coming-soon {
+    font-weight: 600;
+    font-size: 1.3rem;
+    color: #ffe579;
+    text-align: center;
+    padding: 3rem 1rem;
+    background: rgba(255, 221, 87, 0.2);
+    border-radius: 14px;
+    box-shadow: 0 6px 20px rgba(255, 221, 87, 0.4);
+  }
+  /* Custom dropdown arrow */
+  select {
+    background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20width%3D%2210%22%20height%3D%226%22%20viewBox%3D%220%200%2010%206%22%20fill%3D%22none%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cpath%20d%3D%22M0%200L5%206L10%200H0Z%22%20fill%3D%22%23666%22/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 10px 6px;
+  }
+  /* Style for search bar inputs */
+  .search-bar {
+    width: 100%;
+    padding: 0.6rem 1rem;
+    margin-bottom: 0.5rem;
+    border-radius: 10px;
+    border: none;
+    font-size: 1rem;
+    font-family: inherit;
+    box-shadow: inset 0 2px 6px rgba(0,0,0,0.15);
+    outline: none;
+    transition: box-shadow 0.3s ease;
+    color: #333;
+  }
+  .search-bar:focus {
+    box-shadow: inset 0 2px 10px rgba(0,0,0,0.3);
+  }
+  /* Loader Spinner */
+  .spinner {
+    border: 4px solid rgba(255, 221, 87, 0.6);
+    border-top: 4px solid #ffdd57;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    animation: spin 1s linear infinite;
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 10px;
+  }
+  @keyframes spin {
+    0% { transform: rotate(0deg);}
+    100% { transform: rotate(360deg);}
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>Multilingual Translator & Language Learning</h1>
+  <p>Translate text between 500+ languages and learn new languages in a friendly and interactive way.</p>
+</header>
+<main>
+  <!-- Translation Section -->
+  <section aria-label="Text translation section">
+    <h2>Translate Text</h2>
+    <div class="selectors" role="region" aria-label="Language selection section for translation">
+      <div>
+        <label for="search-source">Search source language:</label>
+        <input type="text" id="search-source" class="search-bar" placeholder="Search source language..." aria-label="Search source language" autocomplete="off" />
+        <label for="source-language">From:</label>
+        <select id="source-language" aria-label="Select source language">
+          <!-- Options injected by script -->
+        </select>
+      </div>
+      <div>
+        <label for="search-target">Search target language:</label>
+        <input type="text" id="search-target" class="search-bar" placeholder="Search target language..." aria-label="Search target language" autocomplete="off" />
+        <label for="target-language">To:</label>
+        <select id="target-language" aria-label="Select target language">
+          <!-- Options injected by script -->
+        </select>
+      </div>
+    </div>
+    <label for="source-text" style="margin-top: 1.5rem;">Enter text to translate:</label>
+    <textarea id="source-text" placeholder="Type or paste text here..." aria-label="Input text to translate" spellcheck="true"></textarea>
+    <button id="translate-btn" aria-live="polite">Translate</button>
+    <div id="translation-result" class="output" aria-live="polite" role="region" aria-label="Translation result"></div>
+  </section>
+
+  <!-- Learn Languages Section -->
+  <section id="learn-section" aria-label="Language learning section">
+    <h2>Learn Languages</h2>
+    <label for="search-learn">Search language to learn:</label>
+    <input type="text" id="search-learn" class="search-bar" placeholder="Search language to learn..." aria-label="Search language to learn" autocomplete="off" />
+    <label for="learn-language-select">Select a language to learn:</label>
+    <select id="learn-language-select" aria-label="Select a language to learn">
+      <!-- Options injected by script -->
+    </select>
+    <div id="lesson-container" class="lesson-card" role="region" aria-live="polite" aria-atomic="true" aria-label="Language learning lesson content">
+      <!-- Lesson content injected by script -->
+    </div>
+  </section>
+</main>
+<div class="footer">Powered by <a href="https://libretranslate.com/" target="_blank" rel="noopener noreferrer" style="color:#ffdd57;">LibreTranslate</a> API (public instance)</div>
+
+<script>
+  const languages = [
+    { code: "ab", name: "Abkhazian" },
+    { code: "aa", name: "Afar" },
+    { code: "af", name: "Afrikaans" },
+    { code: "ak", name: "Akan" },
+    { code: "sq", name: "Albanian" },
+    { code: "am", name: "Amharic" },
+    { code: "ar", name: "Arabic" },
+    { code: "an", name: "Aragonese" },
+    { code: "hy", name: "Armenian" },
+    { code: "as", name: "Assamese" },
+    { code: "av", name: "Avaric" },
+    { code: "ae", name: "Avestan" },
+    { code: "ay", name: "Aymara" },
+    { code: "az", name: "Azerbaijani" },
+    { code: "bm", name: "Bambara" },
+    { code: "ba", name: "Bashkir" },
+    { code: "eu", name: "Basque" },
+    { code: "be", name: "Belarusian" },
+    { code: "bn", name: "Bengali" },
+    { code: "bh", name: "Bihari languages" },
+    { code: "bi", name: "Bislama" },
+    { code: "bs", name: "Bosnian" },
+    { code: "br", name: "Breton" },
+    { code: "bg", name: "Bulgarian" },
+    { code: "my", name: "Burmese" },
+    { code: "ca", name: "Catalan; Valencian" },
+    { code: "ch", name: "Chamorro" },
+    { code: "ce", name: "Chechen" },
+    { code: "ny", name: "Chichewa; Chewa; Nyanja" },
+    { code: "zh", name: "Chinese" },
+    { code: "cv", name: "Chuvash" },
+    { code: "kw", name: "Cornish" },
+    { code: "co", name: "Corsican" },
+    { code: "cr", name: "Cree" },
+    { code: "hr", name: "Croatian" },
+    { code: "cs", name: "Czech" },
+    { code: "da", name: "Danish" },
+    { code: "dv", name: "Divehi; Dhivehi; Maldivian;" },
+    { code: "nl", name: "Dutch; Flemish" },
+    { code: "dz", name: "Dzongkha" },
+    { code: "en", name: "English" },
+    { code: "eo", name: "Esperanto" },
+    { code: "et", name: "Estonian" },
+    { code: "ee", name: "Ewe" },
+    { code: "fo", name: "Faroese" },
+    { code: "fj", name: "Fijian" },
+    { code: "fi", name: "Finnish" },
+    { code: "fr", name: "French" },
+    { code: "ff", name: "Fula; Fulah; Pulaar; Pular" },
+    { code: "gl", name: "Galician" },
+    { code: "ka", name: "Georgian" },
+    { code: "de", name: "German" },
+    { code: "el", name: "Greek, Modern (1453–)" },
+    { code: "gn", name: "Guaraní" },
+    { code: "gu", name: "Gujarati" },
+    { code: "ht", name: "Haitian; Haitian Creole" },
+    { code: "ha", name: "Hausa" },
+    { code: "he", name: "Hebrew" },
+    { code: "hz", name: "Herero" },
+    { code: "hi", name: "Hindi" },
+    { code: "ho", name: "Hiri Motu" },
+    { code: "hu", name: "Hungarian" },
+    { code: "ia", name: "Interlingua (International Auxiliary Language Association)" },
+    { code: "id", name: "Indonesian" },
+    { code: "ie", name: "Interlingue; Occidental" },
+    { code: "ga", name: "Irish" },
+    { code: "ig", name: "Igbo" },
+    { code: "ik", name: "Inupiaq" },
+    { code: "io", name: "Ido" },
+    { code: "is", name: "Icelandic" },
+    { code: "it", name: "Italian" },
+    { code: "iu", name: "Inuktitut" },
+    { code: "ja", name: "Japanese" },
+    { code: "jv", name: "Javanese" },
+    { code: "kl", name: "Kalaallisut, Greenlandic" },
+    { code: "kn", name: "Kannada" },
+    { code: "kr", name: "Kanuri" },
+    { code: "ks", name: "Kashmiri" },
+    { code: "kk", name: "Kazakh" },
+    { code: "km", name: "Khmer" },
+    { code: "ki", name: "Kikuyu, Gikuyu" },
+    { code: "rw", name: "Kinyarwanda" },
+    { code: "ky", name: "Kirghiz, Kyrgyz" },
+    { code: "kv", name: "Komi" },
+    { code: "kg", name: "Kongo" },
+    { code: "ko", name: "Korean" },
+    { code: "ku", name: "Kurdish" },
+    { code: "kj", name: "Kwanyama, Kuanyama" },
+    { code: "la", name: "Latin" },
+    { code: "lb", name: "Luxembourgish, Letzeburgesch" },
+    { code: "lg", name: "Ganda" },
+    { code: "li", name: "Limburgish, Limburgan, Limburger" },
+    { code: "ln", name: "Lingala" },
+    { code: "lo", name: "Lao" },
+    { code: "lt", name: "Lithuanian" },
+    { code: "lu", name: "Luba-Katanga" },
+    { code: "lv", name: "Latvian" },
+    { code: "gv", name: "Manx" },
+    { code: "mk", name: "Macedonian" },
+    { code: "mg", name: "Malagasy" },
+    { code: "ms", name: "Malay" },
+    { code: "ml", name: "Malayalam" },
+    { code: "mt", name: "Maltese" },
+    { code: "mi", name: "Māori" },
+    { code: "mr", name: "Marathi (Marāṭhī)" },
+    { code: "mh", name: "Marshallese" },
+    { code: "mn", name: "Mongolian" },
+    { code: "na", name: "Nauru" },
+    { code: "nv", name: "Navajo, Navaho" },
+    { code: "nb", name: "Norwegian Bokmål" },
+    { code: "nd", name: "North Ndebele" },
+    { code: "ne", name: "Nepali" },
+    { code: "ng", name: "Ndonga" },
+    { code: "nn", name: "Norwegian Nynorsk" },
+    { code: "no", name: "Norwegian" },
+    { code: "ii", name: "Nuosu" },
+    { code: "nr", name: "South Ndebele" },
+    { code: "oc", name: "Occitan" },
+    { code: "oj", name: "Ojibwe, Ojibwa" },
+    { code: "cu", name: "Old Church Slavonic, Church Slavic, Church Slavonic, Old Bulgarian, Old Slavonic" },
+    { code: "om", name: "Oromo" },
+    { code: "or", name: "Oriya" },
+    { code: "os", name: "Ossetian, Ossetic" },
+    { code: "pa", name: "Panjabi, Punjabi" },
+    { code: "pi", name: "Pāli" },
+    { code: "fa", name: "Persian" },
+    { code: "pl", name: "Polish" },
+    { code: "ps", name: "Pashto, Pushto" },
+    { code: "pt", name: "Portuguese" },
+    { code: "qu", name: "Quechua" },
+    { code: "rm", name: "Romansh" },
+    { code: "rn", name: "Kirundi" },
+    { code: "ro", name: "Romanian, Moldavian, Moldovan" },
+    { code: "ru", name: "Russian" },
+    { code: "sa", name: "Sanskrit (Saṁskṛta)" },
+    { code: "sc", name: "Sardinian" },
+    { code: "sd", name: "Sindhi" },
+    { code: "se", name: "Northern Sami" },
+    { code: "sm", name: "Samoan" },
+    { code: "sg", name: "Sango" },
+    { code: "sr", name: "Serbian" },
+    { code: "gd", name: "Scottish Gaelic; Gaelic" },
+    { code: "sn", name: "Shona" },
+    { code: "si", name: "Sinhala, Sinhalese" },
+    { code: "sk", name: "Slovak" },
+    { code: "sl", name: "Slovene" },
+    { code: "so", name: "Somali" },
+    { code: "st", name: "Southern Sotho" },
+    { code: "es", name: "Spanish; Castilian" },
+    { code: "su", name: "Sundanese" },
+    { code: "sw", name: "Swahili" },
+    { code: "ss", name: "Swati" },
+    { code: "sv", name: "Swedish" },
+    { code: "ta", name: "Tamil" },
+    { code: "te", name: "Telugu" },
+    { code: "tg", name: "Tajik" },
+    { code: "th", name: "Thai" },
+    { code: "ti", name: "Tigrinya" },
+    { code: "bo", name: "Tibetan Standard, Tibetan, Central" },
+    { code: "tk", name: "Turkmen" },
+    { code: "tl", name: "Tagalog" },
+    { code: "tn", name: "Tswana" },
+    { code: "to", name: "Tonga (Tonga Islands)" },
+    { code: "tr", name: "Turkish" },
+    { code: "ts", name: "Tsonga" },
+    { code: "tt", name: "Tatar" },
+    { code: "tw", name: "Twi" },
+    { code: "ty", name: "Tahitian" },
+    { code: "ug", name: "Uighur, Uyghur" },
+    { code: "uk", name: "Ukrainian" },
+    { code: "ur", name: "Urdu" },
+    { code: "uz", name: "Uzbek" },
+    { code: "ve", name: "Venda" },
+    { code: "vi", name: "Vietnamese" },
+    { code: "vo", name: "Volapük" },
+    { code: "wa", name: "Walloon" },
+    { code: "cy", name: "Welsh" },
+    { code: "wo", name: "Wolof" },
+    { code: "fy", name: "Western Frisian" },
+    { code: "xh", name: "Xhosa" },
+    { code: "yi", name: "Yiddish" },
+    { code: "yo", name: "Yoruba" },
+    { code: "za", name: "Zhuang, Chuang" },
+    { code: "zu", name: "Zulu" }
+  ];
+
+  // Translation supported languages by LibreTranslate API
+  const libreTranslateLanguages = new Set([
+    "en", "ar", "az", "zh", "cs", "de", "es", "fr",
+    "hi", "it", "ja", "ko", "pl", "pt", "ru", "tr",
+    "uk", "vi"
+  ]);
+
+  // DOM Elements
+  const sourceSelect = document.getElementById("source-language");
+  const targetSelect = document.getElementById("target-language");
+  const sourceText = document.getElementById("source-text");
+  const translateBtn = document.getElementById("translate-btn");
+  const resultDiv = document.getElementById("translation-result");
+
+  const learnLanguageSelect = document.getElementById("learn-language-select");
+  const lessonContainer = document.getElementById("lesson-container");
+
+  const searchSource = document.getElementById("search-source");
+  const searchTarget = document.getElementById("search-target");
+  const searchLearn = document.getElementById("search-learn");
+
+  // Populate language selects with all languages
+  function populateSelect(select, langs) {
+      select.innerHTML = '';
+      langs.forEach(({ code, name }) => {
+        const option = document.createElement('option');
+        option.value = code;
+        option.textContent = name;
+        select.appendChild(option);
+      });
+  }
+
+  // Populate all selects initially
+  populateSelect(sourceSelect, languages);
+  populateSelect(targetSelect, languages);
+  populateSelect(learnLanguageSelect, languages);
+
+  // Filter function for searching languages
+  function filterSelect(searchInput, select) {
+      const filterTerm = searchInput.value.toLowerCase();
+      const filteredOptions = languages.filter(lang => lang.name.toLowerCase().includes(filterTerm));
+      populateSelect(select, filteredOptions);
+      if (filteredOptions.length > 0) {
+        select.selectedIndex = 0;
+        if (select.id === 'learn-language-select') {
+          renderLesson(select.value);
+        }
+      } else {
+        if (select.id === 'learn-language-select') {
+          lessonContainer.innerHTML = '<div class="coming-soon">No languages found to learn.</div>';
+        }
+      }
+  }
+
+  // Event listeners for search inputs
+  searchSource.addEventListener('input', () => filterSelect(searchSource, sourceSelect));
+  searchTarget.addEventListener('input', () => filterSelect(searchTarget, targetSelect));
+  searchLearn.addEventListener('input', () => filterSelect(searchLearn, learnLanguageSelect));
+
+  // Set default selection values
+  sourceSelect.value = 'en';
+  targetSelect.value = 'es';
+  learnLanguageSelect.value = 'en';
+
+  // Check supported language for translation
+  function isSupportedLang(lang) {
+    return libreTranslateLanguages.has(lang);
+  }
+
+  // Show the translation results or error messages
+  function setResult(message, isError = false) {
+    resultDiv.textContent = message;
+    if (isError) {
+      resultDiv.style.color = '#ff6b6b';
+    } else {
+      resultDiv.style.color = '#fff';
+    }
+  }
+
+  // Add loading spinner inside Translate button
+  function addLoadingSpinner() {
+    if (!document.getElementById('loading-spinner')) {
+      const spinner = document.createElement('span');
+      spinner.classList.add('spinner');
+      spinner.id = 'loading-spinner';
+      translateBtn.appendChild(spinner);
+    }
+  }
+  
+  // Remove loading spinner
+  function removeLoadingSpinner() {
+    const spinner = document.getElementById('loading-spinner');
+    if (spinner) spinner.remove();
+  }
+
+  // Function to handle translation request
+  async function translateText() {
+    const text = sourceText.value.trim();
+    if (!text) {
+      setResult("Please enter some text to translate.", true);
+      return;
+    }
+    const sourceLang = sourceSelect.value;
+    const targetLang = targetSelect.value;
+    if (sourceLang === targetLang) {
+      setResult("Source and target languages cannot be the same.", true);
+      return;
+    }
+    if (!isSupportedLang(sourceLang) || !isSupportedLang(targetLang)) {
+      setResult("Translation not supported for selected languages. Please select different ones.", true);
+      return;
+    }
+    setResult("Translating...");
+    translateBtn.disabled = true;
+    addLoadingSpinner();
+    try {
+      const timeoutPromise = new Promise((_, reject) =>
+        setTimeout(() => reject(new Error('Translation timeout. Please try again later.')), 15000)
+      );
+      const fetchPromise = fetch("https://libretranslate.de/translate", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+          q: text,
+          source: sourceLang,
+          target: targetLang,
+          format: "text"
+        })
+      }).then(res => {
+        if (!res.ok) throw new Error(`API error: ${res.status} ${res.statusText}`);
+        return res.json();
+      });
+      const data = await Promise.race([fetchPromise, timeoutPromise]);
+      if (data && data.translatedText) {
+        setResult(data.translatedText);
+      } else {
+        setResult("Translation failed: no translated text received.", true);
+      }
+    } catch (error) {
+      setResult(`Translation failed: ${error.message}`, true);
+    } finally {
+      translateBtn.disabled = false;
+      removeLoadingSpinner();
+    }
+  }
+
+  // Translate button click event
+  translateBtn.addEventListener('click', translateText);
+
+  // Ctrl+Enter keyboard shortcut for translation
+  sourceText.addEventListener('keydown', e => {
+    if ((e.key === 'Enter') && (e.ctrlKey || e.metaKey)) {
+      e.preventDefault();
+      if (!translateBtn.disabled) translateText();
+    }
+  });
+
+  // Language learning lessons for select popular languages
+  const lessons = {
+    en: {
+      intro: "Welcome to English! English is a widely spoken global language, known for its simple alphabet and versatile grammar.",
+      greetings: [
+        { phrase: "Hello", translation: "Hello", pronunciation: "huh-LOH" },
+        { phrase: "Thank you", translation: "Thank you", pronunciation: "THANGK yoo" },
+        { phrase: "Goodbye", translation: "Goodbye", pronunciation: "GOOD-bye" }
+      ],
+      basics: "English alphabet has 26 letters: A to Z. Simple sentence structure follows Subject-Verb-Object order."
+    },
+    es: {
+      intro: "¡Bienvenido al Español! Spanish is a Romance language with beautiful pronunciation and rich culture.",
+      greetings: [
+        { phrase: "Hola", translation: "Hello", pronunciation: "OH-lah" },
+        { phrase: "Gracias", translation: "Thank you", pronunciation: "GRAH-syahs" },
+        { phrase: "Adiós", translation: "Goodbye", pronunciation: "ah-DEE-ohs" }
+      ],
+      basics: "Spanish alphabet uses the same letters as English plus 'ñ'. Verbs conjugate for person and tense."
+    },
+    fr: {
+      intro: "Bienvenue en Français! French is a Romance language famous for its beautiful sounds and literature.",
+      greetings: [
+        { phrase: "Bonjour", translation: "Hello", pronunciation: "bohn-ZHOOR" },
+        { phrase: "Merci", translation: "Thank you", pronunciation: "mehr-SEE" },
+        { phrase: "Au revoir", translation: "Goodbye", pronunciation: "oh ruh-VWAR" }
+      ],
+      basics: "French has 26 letters like English, but pronunciations differ. It features gendered nouns and verb conjugations."
+    },
+    ja: {
+      intro: "ようこそ日本語へ！ Japanese has three scripts: Hiragana, Katakana, and Kanji, making it uniquely beautiful.",
+      greetings: [
+        { phrase: "こんにちは (Konnichiwa)", translation: "Hello", pronunciation: "kohn-nee-chee-wah" },
+        { phrase: "ありがとう (Arigatou)", translation: "Thank you", pronunciation: "ah-ree-gah-toh" },
+        { phrase: "さようなら (Sayounara)", translation: "Goodbye", pronunciation: "sah-yoh-nah-rah" }
+      ],
+      basics: "Japanese grammar uses particles to mark subjects and objects. Word order is SOV: Subject-Object-Verb."
+    },
+    ar: {
+      intro: "مرحبا بالعربية! Arabic is a Semitic language with a beautiful cursive script and rich history.",
+      greetings: [
+        { phrase: "مرحبا (Marhaba)", translation: "Hello", pronunciation: "mar-ha-ba" },
+        { phrase: "شكرا (Shukran)", translation: "Thank you", pronunciation: "shoo-krahn" },
+        { phrase: "مع السلامة (Ma‘a as-salāmah)", translation: "Goodbye", pronunciation: "ma'a as-sa-la-ma" }
+      ],
+      basics: "Arabic is written right to left. It has 28 letters and complex verb forms to express tense and mood."
+    },
+    hi: {
+      intro: "हिंदी में आपका स्वागत है! Hindi is spoken mainly in India and uses the Devanagari script.",
+      greetings: [
+        { phrase: "नमस्ते (Namaste)", translation: "Hello", pronunciation: "nuh-mus-tay" },
+        { phrase: "धन्यवाद (Dhanyavaad)", translation: "Thank you", pronunciation: "dhun-yuh-vaad" },
+        { phrase: "अलविदा (Alvida)", translation: "Goodbye", pronunciation: "ul-vee-dah" }
+      ],
+      basics: "Hindi grammar uses postpositions unlike prepositions; verbs agree with subjects in gender and number."
+    },
+    ru: {
+      intro: "Добро пожаловать в русский язык! Russian uses the Cyrillic alphabet and is known for its rich literature.",
+      greetings: [
+        { phrase: "Здравствуйте (Zdravstvuyte)", translation: "Hello", pronunciation: "zdrah-stvooy-tyeh" },
+        { phrase: "Спасибо (Spasibo)", translation: "Thank you", pronunciation: "spuh-see-buh" },
+        { phrase: "До свидания (Do svidaniya)", translation: "Goodbye", pronunciation: "duh svee-dah-nee-ya" }
+      ],
+      basics: "Russian grammar is highly inflected with cases affecting nouns and adjectives. Word order is flexible."
+    }
+  };
+
+  // Render lesson content or fallback
+  function renderLesson(languageCode) {
+    const lesson = lessons[languageCode];
+    const langName = languages.find(l => l.code === languageCode)?.name || languageCode;
+    if (lesson) {
+      let html = `<h3>About ${langName}</h3>`;
+      html += `<p>${lesson.intro}</p>`;
+      html += `<strong>Basic Greetings:</strong>`;
+      html += `<ul class="phrases">`;
+      lesson.greetings.forEach(g => {
+        html += `<li><span class="phrase" title="Pronunciation">${g.phrase}</span>: ${g.translation} <em style="font-weight:400; font-style:normal; margin-left:10px; color:#ffec99;">[${g.pronunciation}]</em></li>`;
+      });
+      html += `</ul>`;
+      html += `<p><strong>Basics:</strong> ${lesson.basics}</p>`;
+      lessonContainer.innerHTML = html;
+    } else {
+      let html = `<h3>Welcome to ${langName}</h3>`;
+      html += `<p>Welcome! Learning ${langName} is an exciting adventure. Explore its unique sounds, words, and culture.</p>`;
+      html += `<strong>Try these common greetings:</strong>`;
+      html += `<ul class="phrases">`;
+      html += `<li><span class="phrase" title="Greeting">Hello</span>: Hello</li>`;
+      html += `<li><span class="phrase" title="Greeting">Thank you</span>: Thank you</li>`;
+      html += `<li><span class="phrase" title="Greeting">Goodbye</span>: Goodbye</li>`;
+      html += `</ul>`;
+      html += `<p>Check out translations and try practicing daily. More rich lessons coming soon!</p>`;
+      lessonContainer.innerHTML = html;
+    }
+  }
+
+  learnLanguageSelect.addEventListener('change', () => {
+    renderLesson(learnLanguageSelect.value);
+  });
+
+  renderLesson(learnLanguageSelect.value);
+</script>
+</body>
+</html>
+
+```
